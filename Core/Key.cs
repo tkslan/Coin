@@ -4,60 +4,68 @@ using System.Text;
 
 namespace Coin.Core
 {
-    public class Key
-    {
-        public string Public => ByteToString(_publicKey);
-        public string Adress => GetAdressFromPublicKey();
-        public string Private => ByteToString(_privateKey);
+   public class Key
+   {
+      public string Public => ByteToString(_publicKey);
+      public string Adress => GetAdressFromPublicKey();
+      public string Private => ByteToString(_privateKey);
 
-        private readonly byte[] _publicKey, _privateKey;
-        private Rebex.Security.Cryptography.Ed25519 _ed25519;
+      private readonly byte[] _publicKey, _privateKey;
+      private Rebex.Security.Cryptography.Ed25519 _ed25519;
 
-        public Key(string seed = null)
-        {
-            _ed25519 = new Rebex.Security.Cryptography.Ed25519();
-            var sha256 = new SHA256Managed();
-            sha256.Initialize();
-            _ed25519.FromSeed(
-                sha256.ComputeHash(string.IsNullOrEmpty(seed) ? GetSeedKey() : Encoding.UTF8.GetBytes(seed)));
+      private SHA256Managed _sha256;
 
-            _publicKey = _ed25519.GetPublicKey();
-            _privateKey = _ed25519.GetPrivateKey();
-        }
+      public Key(string seed = null)
+      {
+         _ed25519 = new Rebex.Security.Cryptography.Ed25519();
+         _sha256 = new SHA256Managed();
+         _ed25519.FromSeed(
+            _sha256.ComputeHash(string.IsNullOrEmpty(seed) ? GetSeedKey() : Encoding.UTF8.GetBytes(seed)));
 
-        public string Sing(byte[] message)
-        {
-            return ByteToString(_ed25519.SignMessage(message));
-        }
+         _publicKey = _ed25519.GetPublicKey();
+         _privateKey = _ed25519.GetPrivateKey();
+      }
 
-        string GetAdressFromPublicKey()
-        {
-            return Base58Check.Base58CheckEncoding.Encode(_publicKey);
-        }
+      public string Sing(byte[] message)
+      {
+         return ByteToString(_ed25519.SignMessage(message));
+      }
 
-        string ByteToString(byte[] buff)
-        {
-            var builder = new StringBuilder();
+      string GetAdressFromPublicKey()
+      {
+         var ripemd160 = new RIPEMD160Managed();
+         var bytes = new byte[21];
+         bytes[0] = 0x41;
+         ripemd160.ComputeHash(_sha256.ComputeHash(_publicKey)).CopyTo(bytes, 1);
+         ripemd160.Dispose();
+         _sha256.Dispose();
+         var base58 = Base58Check.Base58CheckEncoding.Encode(bytes);
+         return base58;
+      }
 
-            for (var i = 0; i < buff.Length; i++)
-            {
-                builder.Append(buff[i].ToString("X2")); // hex format
-            }
+      string ByteToString(byte[] buff)
+      {
+         var builder = new StringBuilder();
 
-            return builder.ToString();
-        }
+         for (var i = 0; i < buff.Length; i++)
+         {
+            builder.Append(buff[i].ToString("X2")); // hex format
+         }
 
-        private byte[] GetSeedKey()
-        {
-            var secretkey = new Byte[64];
-            //RNGCryptoServiceProvider is an implementation of a random number generator.
-            using (var rng = new RNGCryptoServiceProvider())
-            {
-                // The array is now filled with cryptographically strong random bytes.
-                rng.GetBytes(secretkey);
-            }
+         return builder.ToString();
+      }
 
-            return secretkey;
-        }
-    }
+      private byte[] GetSeedKey()
+      {
+         var secretkey = new Byte[64];
+         //RNGCryptoServiceProvider is an implementation of a random number generator.
+         using (var rng = new RNGCryptoServiceProvider())
+         {
+            // The array is now filled with cryptographically strong random bytes.
+            rng.GetBytes(secretkey);
+         }
+
+         return secretkey;
+      }
+   }
 }
