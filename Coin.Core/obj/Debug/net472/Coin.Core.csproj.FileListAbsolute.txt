@@ -1,0 +1,11 @@
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\bin\Debug\net472\Coin.Core.dll
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\bin\Debug\net472\Coin.Core.pdb
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\bin\Debug\net472\Rebex.Ed25519.dll
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.csprojAssemblyReference.cache
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.csproj.CoreCompileInputs.cache
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.AssemblyInfoInputs.cache
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.AssemblyInfo.cs
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.csproj.CopyComplete
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.dll
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\obj\Debug\net472\Coin.Core.pdb
+D:\PLASTIC\YSLAB\testRepo\TestCase\Coin\Coin.Core\bin\Debug\net472\Base58Check.dll
