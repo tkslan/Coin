@@ -64,13 +64,25 @@ namespace Coin.Tests
       }
 
       [Test]
-      public void PubKeyConvertToB58IsNotValidWhenSeedChanged()
+      public void PubKeyConvertToB58IsNotTheSameWhenSeedChanged()
       {
          var key = new Key(seed1 + "test");
          var adress = key.Adress;
          Assert.NotNull(key);
          Assert.NotNull(adress);
          Assert.AreNotEqual(seed1Adress, adress);
+        
+      }
+
+      [Test]
+      public void PubKeyB58IsValidAdress()
+      {
+         var key = new Key();
+         var adress = key.Adress;
+         Assert.IsTrue(key.ValidateAdress(adress));
+         Assert.IsTrue(key.ValidateAdress(seed1Adress));
+         Assert.IsFalse(key.ValidateAdress(seed1Adress.Substring(0,seed1Adress.Length-1)));
+         Assert.IsFalse(key.ValidateAdress(seed1Adress.Replace("T","t")));
       }
    }
 }

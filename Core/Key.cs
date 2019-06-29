@@ -38,9 +38,37 @@ namespace Coin.Core
          bytes[0] = 0x41;
          ripemd160.ComputeHash(_sha256.ComputeHash(_publicKey)).CopyTo(bytes, 1);
          ripemd160.Dispose();
-         _sha256.Dispose();
          var base58 = Base58Check.Base58CheckEncoding.Encode(bytes);
+         bool valid = ValidateAdress(base58);
          return base58;
+      }
+
+      public bool ValidateAdress(string address)
+      {
+         var checksumSize = 4;
+         var bytes = Base58Check.Base58CheckEncoding.DecodePlain(address);
+         var source = new byte[checksumSize];
+         var result = new byte[checksumSize];
+         Buffer.BlockCopy(bytes, bytes.Length - checksumSize, source, 0, checksumSize);
+
+         var shortBytes = new byte[21];
+         for (int i = 0; i < bytes.Length - checksumSize; i++)
+         {
+            shortBytes[i] = bytes[i];
+         }
+
+         var checksum = _sha256.ComputeHash(_sha256.ComputeHash(shortBytes));
+
+         Buffer.BlockCopy(checksum, 0, result, 0, checksumSize);
+
+         var areEquals = true;
+         for (int i = 0; i < checksumSize; i++)
+         {
+            if (source[i] != result[i])
+               areEquals = false;
+         }
+
+         return areEquals;
       }
 
       string ByteToString(byte[] buff)
