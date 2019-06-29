@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coin.GUI", "Coin.GUI\Coin.GUI.csproj", "{C3F70D90-DB8D-4C9A-9347-C47CC8FEC2FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{C3F70D90-DB8D-4C9A-9347-C47CC8FEC2FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coin.Tests", "Coin.Tests\Coin.Tests.csproj", "{4F19BB77-BBEF-494B-85CD-04CE5722B74D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{4F19BB77-BBEF-494B-85CD-04CE5722B74D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coin.Core", "Coin.Core\Coin.Core.csproj", "{F84EFC1D-7885-4742-BE8C-A3C615437EC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F84EFC1D-7885-4742-BE8C-A3C615437EC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
