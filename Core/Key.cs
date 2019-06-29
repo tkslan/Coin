@@ -39,7 +39,6 @@ namespace Coin.Core
          ripemd160.ComputeHash(_sha256.ComputeHash(_publicKey)).CopyTo(bytes, 1);
          ripemd160.Dispose();
          var base58 = Base58Check.Base58CheckEncoding.Encode(bytes);
-         bool valid = ValidateAdress(base58);
          return base58;
       }
 
