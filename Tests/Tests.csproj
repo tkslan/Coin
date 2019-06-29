@@ -57,9 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Coin.Core\Coin.Core.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{f84efc1d-7885-4742-be8c-a3c615437ec1}</Project>
-      <Name>Coin.Core</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
