@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Coin.Tests
 {
    [TestFixture]
-   public class KeyTests
+   public class Keys
    {
       private const string seed1 = "1";
       private const string seed1PrivateKey = "CD03FBDDCAAA2703C251656D5CCDD99F5635B1E0653C0636B951A3A3DB21DAD4";
@@ -87,21 +87,6 @@ namespace Coin.Tests
          Assert.IsFalse(key.ValidateAdress(seed1Adress.Replace("T", "t")));
       }
 
-      [Test]
-      public void SingTxWithPublicKey()
-      {
-         var key = new Key();
-         var tx = new BlockTx()
-         {
-            Amount = 1,
-            PubKeyFrom = key.Public,
-            PubKeyTo = new Key("test").Public
-         };
-         var serializedTx = tx.Serialize();
-         tx.Sign(key);
-         Assert.NotNull(tx.Fingerprint);
-         Assert.NotZero(tx.Fingerprint.Length);
-        // Assert.IsTrue(key.Verify(serializedTx,tx.Fingerprint));
-      }
+     
    }
 }

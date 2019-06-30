@@ -44,7 +44,6 @@ namespace Coin.Core
             throw new OperationCanceledException("Transaction cannot be verified, this is an error");
          
          Fingerprint = fingerprint;
-
       }
    }
 }

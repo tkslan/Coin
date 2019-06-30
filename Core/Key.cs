@@ -26,6 +26,14 @@ namespace Coin.Core
          _privateKey = _ed25519.GetPrivateKey();
       }
 
+      public Key(byte[] fromPublicKey)
+      {
+         _ed25519 = new Rebex.Security.Cryptography.Ed25519();
+         _sha256 = new SHA256Managed();
+         _ed25519.FromPublicKey(fromPublicKey);
+         _publicKey = _ed25519.GetPublicKey();
+      }
+
       public string Sing(byte[] message)
       {
          return ArrayToHex(_ed25519.SignMessage(message));
@@ -35,6 +43,7 @@ namespace Coin.Core
       {
          return _ed25519.VerifyMessage(message, fingerprint);
       }
+
       string GetAdressFromPublicKey()
       {
          var ripemd160 = new RIPEMD160Managed();
@@ -88,7 +97,6 @@ namespace Coin.Core
             // The array is now filled with cryptographically strong random bytes.
             rng.GetBytes(secretkey);
          }
-
          return secretkey;
       }
    }
