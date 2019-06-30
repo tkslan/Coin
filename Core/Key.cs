@@ -6,9 +6,9 @@ namespace Coin.Core
 {
    public class Key
    {
-      public string Public => ByteToString(_publicKey);
-      public string Adress => GetAdressFromPublicKey();
-      public string Private => ByteToString(_privateKey);
+      public string Public => ArrayToHex(_publicKey);
+      public string Address => GetAdressFromPublicKey();
+      public string Private => ArrayToHex(_privateKey);
 
       private readonly byte[] _publicKey, _privateKey;
       private Rebex.Security.Cryptography.Ed25519 _ed25519;
@@ -28,9 +28,13 @@ namespace Coin.Core
 
       public string Sing(byte[] message)
       {
-         return ByteToString(_ed25519.SignMessage(message));
+         return ArrayToHex(_ed25519.SignMessage(message));
       }
 
+      public bool Verify(byte[] message, byte[] fingerprint)
+      {
+         return _ed25519.VerifyMessage(message, fingerprint);
+      }
       string GetAdressFromPublicKey()
       {
          var ripemd160 = new RIPEMD160Managed();
@@ -70,16 +74,9 @@ namespace Coin.Core
          return areEquals;
       }
 
-      string ByteToString(byte[] buff)
+      string ArrayToHex(byte[] buff)
       {
-         var builder = new StringBuilder();
-
-         for (var i = 0; i < buff.Length; i++)
-         {
-            builder.Append(buff[i].ToString("X2")); // hex format
-         }
-
-         return builder.ToString();
+         return ByteArray.ByteToHex(buff);
       }
 
       private byte[] GetSeedKey()

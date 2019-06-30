@@ -1,4 +1,7 @@
-﻿using Coin.Core;
+﻿using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using Coin.Core;
 using NUnit.Framework;
 
 namespace Coin.Tests
@@ -56,7 +59,7 @@ namespace Coin.Tests
       public void PubKeyConvertToB58IsValidAdress()
       {
          var key = new Key(seed1);
-         var adress = key.Adress;
+         var adress = key.Address;
          Assert.NotNull(key);
          Assert.NotNull(adress);
          Assert.AreEqual(34, adress.Length);
@@ -67,22 +70,38 @@ namespace Coin.Tests
       public void PubKeyConvertToB58IsNotTheSameWhenSeedChanged()
       {
          var key = new Key(seed1 + "test");
-         var adress = key.Adress;
+         var adress = key.Address;
          Assert.NotNull(key);
          Assert.NotNull(adress);
          Assert.AreNotEqual(seed1Adress, adress);
-        
       }
 
       [Test]
       public void PubKeyB58IsValidAdress()
       {
          var key = new Key();
-         var adress = key.Adress;
+         var adress = key.Address;
          Assert.IsTrue(key.ValidateAdress(adress));
          Assert.IsTrue(key.ValidateAdress(seed1Adress));
-         Assert.IsFalse(key.ValidateAdress(seed1Adress.Substring(0,seed1Adress.Length-1)));
-         Assert.IsFalse(key.ValidateAdress(seed1Adress.Replace("T","t")));
+         Assert.IsFalse(key.ValidateAdress(seed1Adress.Substring(0, seed1Adress.Length - 1)));
+         Assert.IsFalse(key.ValidateAdress(seed1Adress.Replace("T", "t")));
+      }
+
+      [Test]
+      public void SingTxWithPublicKey()
+      {
+         var key = new Key();
+         var tx = new BlockTx()
+         {
+            Amount = 1,
+            PubKeyFrom = key.Public,
+            PubKeyTo = new Key("test").Public
+         };
+         var serializedTx = tx.Serialize();
+         tx.Sign(key);
+         Assert.NotNull(tx.Fingerprint);
+         Assert.NotZero(tx.Fingerprint.Length);
+        // Assert.IsTrue(key.Verify(serializedTx,tx.Fingerprint));
       }
    }
 }
