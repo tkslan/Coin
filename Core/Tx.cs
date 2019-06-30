@@ -16,8 +16,7 @@ namespace Coin.Core
       public Tx()
       {
          this.Timestamp = Time.Timestamp();
-      }
-
+      } 
       public byte[] Serialize()
       {
          using (var ms = new MemoryStream())

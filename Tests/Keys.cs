@@ -86,7 +86,5 @@ namespace Coin.Tests
          Assert.IsFalse(key.ValidateAdress(seed1Adress.Substring(0, seed1Adress.Length - 1)));
          Assert.IsFalse(key.ValidateAdress(seed1Adress.Replace("T", "t")));
       }
-
-     
    }
 }

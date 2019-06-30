@@ -159,6 +159,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions.cs" />
